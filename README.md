@@ -88,6 +88,20 @@ CV MAE:  0.06168934
 
 `text_positive_ratio`, `text_negative_ratio`, 긍정/부정 TF-IDF는 예측 target과 동일한 리뷰 별점으로 만들어졌기 때문에 평균 평점 예측에서는 target leakage를 일으킬 수 있습니다. 따라서 모델의 일반화 성능을 주장할 때는 leakage-safe 결과를 함께 보고해야 합니다.
 
+기존 Content KNN과 Graph-augmented MLP도 동일한 16개 leakage-safe feature로 다시 평가했습니다.
+
+```text
+Content KNN (k=20)
+CV RMSE: 0.08776978
+CV MAE:  0.06463440
+
+Graph-augmented MLP (hidden=16, lr=0.003, epochs=500)
+CV RMSE: 0.20609465
+CV MAE:  0.15810297
+```
+
+KNN은 Ridge 계열보다 조금 낮지만 비교적 안정적인 결과를 보였습니다. Graph-augmented MLP는 feature 유사도로 만든 인접 관계가 실제 학생 선호나 수강 관계를 나타내지 못해 성능이 크게 낮았습니다.
+
 ## Graph-augmented MLP
 
 - Node: 강의
@@ -133,6 +147,7 @@ pip install -r requirements.txt
 python scripts\run_full_cv_experiment.py
 python scripts\make_cv_visuals.py
 python scripts\run_extended_model_experiment.py
+python scripts\run_leakage_safe_legacy_models.py
 python scripts\make_extended_model_visuals.py
 ```
 
