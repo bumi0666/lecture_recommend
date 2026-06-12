@@ -65,6 +65,29 @@ CV MAE:  0.04178956
 
 정규화 값을 5점 척도로 환산하면 RMSE는 약 0.28점, MAE는 약 0.21점입니다.
 
+### Extended Model Comparison
+
+작은 표형 데이터에 적합한 모델을 추가로 비교했습니다.
+
+- RBF-SVR
+- Kernel Ridge-RBF
+- Random Forest
+- Extra Trees
+- Gradient Boosting
+- Histogram Gradient Boosting
+- Stacking Ensemble
+
+31개 feature 전체에서는 Ridge가 여전히 가장 좋은 MSE를 보였습니다. 별점으로 생성한 감성 feature를 제외한 16개 `leakage_safe` feature에서는 Kernel Ridge-RBF가 가장 좋은 결과를 냈지만, Ridge 대비 MSE 개선은 약 0.9%로 근소했습니다.
+
+```text
+Leakage-safe best model: Kernel Ridge-RBF
+CV MSE:  0.00722578
+CV RMSE: 0.08430563
+CV MAE:  0.06168934
+```
+
+`text_positive_ratio`, `text_negative_ratio`, 긍정/부정 TF-IDF는 예측 target과 동일한 리뷰 별점으로 만들어졌기 때문에 평균 평점 예측에서는 target leakage를 일으킬 수 있습니다. 따라서 모델의 일반화 성능을 주장할 때는 leakage-safe 결과를 함께 보고해야 합니다.
+
 ## Graph-augmented MLP
 
 - Node: 강의
@@ -109,6 +132,8 @@ pip install -r requirements.txt
 ```powershell
 python scripts\run_full_cv_experiment.py
 python scripts\make_cv_visuals.py
+python scripts\run_extended_model_experiment.py
+python scripts\make_extended_model_visuals.py
 ```
 
 Top-10 추천:
