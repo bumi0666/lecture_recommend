@@ -102,6 +102,20 @@ CV MAE:  0.15810297
 
 KNN은 Ridge 계열보다 조금 낮지만 비교적 안정적인 결과를 보였습니다. Graph-augmented MLP는 feature 유사도로 만든 인접 관계가 실제 학생 선호나 수강 관계를 나타내지 못해 성능이 크게 낮았습니다.
 
+### KoBERT + Structured Features
+
+강의평 13,979개를 frozen KoBERT encoder로 임베딩하고, 강의별 평균 임베딩을 정형 feature 10개와 결합했습니다. PCA는 leakage 방지를 위해 각 cross-validation fold의 train 데이터에서만 학습했습니다.
+
+```text
+Structured 10 only Ridge RMSE:            0.085304
+KoBERT PCA32 only Ridge RMSE:             0.108486
+Structured 10 + KoBERT PCA32 Ridge RMSE:  0.082837
+```
+
+결합 모델은 정형 feature만 사용한 모델보다 RMSE가 약 2.9% 개선됐고, 이전 leakage-safe Kernel Ridge보다 약 1.7% 개선됐습니다. XGBoost와 LightGBM도 실험했지만 RMSE 기준으로는 Ridge가 가장 좋았습니다.
+
+리뷰 텍스트와 target 평균 별점은 같은 강의의 기존 리뷰에서 나온 정보입니다. 따라서 이 결과는 리뷰가 이미 존재하는 강의의 품질 추정에는 사용할 수 있지만, 리뷰가 없는 신규 강의의 cold-start 성능을 의미하지는 않습니다.
+
 ## Graph-augmented MLP
 
 - Node: 강의
@@ -149,6 +163,10 @@ python scripts\make_cv_visuals.py
 python scripts\run_extended_model_experiment.py
 python scripts\run_leakage_safe_legacy_models.py
 python scripts\make_extended_model_visuals.py
+python scripts\build_transformer_embeddings.py
+python scripts\run_transformer_tabular_experiment.py
+python scripts\run_transformer_ablation.py
+python scripts\make_transformer_visuals.py
 ```
 
 Top-10 추천:
