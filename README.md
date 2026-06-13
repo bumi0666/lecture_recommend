@@ -114,6 +114,23 @@ Structured 10 + KoBERT PCA32 Ridge RMSE:  0.082837
 
 결합 모델은 정형 feature만 사용한 모델보다 RMSE가 약 2.9% 개선됐고, 이전 leakage-safe Kernel Ridge보다 약 1.7% 개선됐습니다. XGBoost와 LightGBM도 실험했지만 RMSE 기준으로는 Ridge가 가장 좋았습니다.
 
+동일한 `정형 10 + KoBERT PCA32` 입력으로 전체 모델군을 다시 비교한 결과는 다음과 같습니다.
+
+```text
+Ridge                       RMSE 0.082837
+XGBoost                     RMSE 0.084969
+Extra Trees                 RMSE 0.085564
+Gradient Boosting           RMSE 0.085815
+Histogram Gradient Boosting RMSE 0.085839
+LightGBM                    RMSE 0.086318
+Random Forest               RMSE 0.086617
+Kernel Ridge-RBF            RMSE 0.087002
+SVR-RBF                     RMSE 0.088387
+Content KNN                 RMSE 0.106021
+```
+
+TF-IDF 기반 16개 feature에서는 Kernel Ridge가 가장 좋았지만, KoBERT 결합 feature에서는 일반 Ridge가 가장 좋았습니다. 최적 모델은 feature 표현에 따라 달라질 수 있음을 보여줍니다.
+
 리뷰 텍스트와 target 평균 별점은 같은 강의의 기존 리뷰에서 나온 정보입니다. 따라서 이 결과는 리뷰가 이미 존재하는 강의의 품질 추정에는 사용할 수 있지만, 리뷰가 없는 신규 강의의 cold-start 성능을 의미하지는 않습니다.
 
 ## Graph-augmented MLP
@@ -167,6 +184,8 @@ python scripts\build_transformer_embeddings.py
 python scripts\run_transformer_tabular_experiment.py
 python scripts\run_transformer_ablation.py
 python scripts\make_transformer_visuals.py
+python scripts\run_kobert_all_models.py
+python scripts\make_kobert_all_models_visual.py
 ```
 
 Top-10 추천:
