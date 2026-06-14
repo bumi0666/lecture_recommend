@@ -158,7 +158,7 @@ MLP               RMSE 0.088816
 SVR-RBF           RMSE 0.090054
 ```
 
-최종 모델은 `Kernel Ridge-RBF(alpha=0.01, gamma=0.001)`입니다. KoBERT 실험은 확장 실험으로 보존하지만, 팀 발표의 메인 파이프라인에는 포함하지 않습니다.
+정밀 grid search 결과 최종 모델은 `Kernel Ridge-RBF(alpha=1e-6, gamma=1e-5)`이며, CV RMSE는 `0.084056`입니다. 기존 coarse-grid 설정인 `alpha=0.01, gamma=0.001`과의 차이는 작아 작은 alpha와 gamma 영역이 넓은 안정 구간을 형성합니다. KoBERT 실험은 확장 실험으로 보존하지만, 팀 발표의 메인 파이프라인에는 포함하지 않습니다.
 
 리뷰 텍스트와 target 평균 별점은 같은 강의의 기존 리뷰에서 나온 정보입니다. 따라서 이 결과는 리뷰가 이미 존재하는 강의의 품질 추정에는 사용할 수 있지만, 리뷰가 없는 신규 강의의 cold-start 성능을 의미하지는 않습니다.
 
