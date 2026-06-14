@@ -144,6 +144,22 @@ MLP               RMSE 0.114041
 
 MLP는 `(64, 32)` 은닉층과 early stopping을 적용했지만, 753개의 작은 데이터에서는 Ridge보다 낮은 성능을 보였습니다.
 
+### TF-IDF Final Presentation Configuration
+
+팀 최종 발표에서는 해석 가능한 persona feature 공간과의 일관성을 위해 `정형 10 + 카테고리 TF-IDF 6` 구성을 사용합니다.
+
+```text
+Kernel Ridge-RBF  RMSE 0.084306
+Ridge             RMSE 0.084741
+Random Forest     RMSE 0.086671
+Gradient Boosting RMSE 0.087399
+Content KNN       RMSE 0.087770
+MLP               RMSE 0.088816
+SVR-RBF           RMSE 0.090054
+```
+
+최종 모델은 `Kernel Ridge-RBF(alpha=0.01, gamma=0.001)`입니다. KoBERT 실험은 확장 실험으로 보존하지만, 팀 발표의 메인 파이프라인에는 포함하지 않습니다.
+
 리뷰 텍스트와 target 평균 별점은 같은 강의의 기존 리뷰에서 나온 정보입니다. 따라서 이 결과는 리뷰가 이미 존재하는 강의의 품질 추정에는 사용할 수 있지만, 리뷰가 없는 신규 강의의 cold-start 성능을 의미하지는 않습니다.
 
 ## Graph-augmented MLP
