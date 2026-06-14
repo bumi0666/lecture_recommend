@@ -131,6 +131,19 @@ Content KNN                 RMSE 0.106021
 
 TF-IDF 기반 16개 feature에서는 Kernel Ridge가 가장 좋았지만, KoBERT 결합 feature에서는 일반 Ridge가 가장 좋았습니다. 최적 모델은 feature 표현에 따라 달라질 수 있음을 보여줍니다.
 
+발표용 대표 모델 6개 비교에는 일반 MLP도 동일한 최종 feature로 추가했습니다.
+
+```text
+Ridge             RMSE 0.082837
+Gradient Boosting RMSE 0.085815
+Random Forest     RMSE 0.086617
+SVR-RBF           RMSE 0.088387
+Content KNN       RMSE 0.106021
+MLP               RMSE 0.114041
+```
+
+MLP는 `(64, 32)` 은닉층과 early stopping을 적용했지만, 753개의 작은 데이터에서는 Ridge보다 낮은 성능을 보였습니다.
+
 리뷰 텍스트와 target 평균 별점은 같은 강의의 기존 리뷰에서 나온 정보입니다. 따라서 이 결과는 리뷰가 이미 존재하는 강의의 품질 추정에는 사용할 수 있지만, 리뷰가 없는 신규 강의의 cold-start 성능을 의미하지는 않습니다.
 
 ## Graph-augmented MLP
@@ -186,6 +199,8 @@ python scripts\run_transformer_ablation.py
 python scripts\make_transformer_visuals.py
 python scripts\run_kobert_all_models.py
 python scripts\make_kobert_all_models_visual.py
+python scripts\run_kobert_mlp_experiment.py
+python scripts\make_six_model_comparison.py
 ```
 
 Top-10 추천:
